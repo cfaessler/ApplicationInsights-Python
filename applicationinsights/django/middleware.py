@@ -199,6 +199,11 @@ class ApplicationInsightsMiddleware(object):
             for k, v in view_kwargs.items():
                 data.properties['view_arg_' + k] = arg_to_str(v)
 
+        if self._settings.role_name:
+            context.device.role_name = self._settings.role_name
+        if self._settings.instance_name:
+            context.device.instance_name = self._settings.instance_name
+
         return None
 
     def process_exception(self, request, exception):
@@ -218,6 +223,12 @@ class ApplicationInsightsMiddleware(object):
             client.context.operation.parent_id = request.appinsights.request.id
 
         client.track_exception(type(exception), exception, tb)
+        
+        if self._settings.role_name:
+            context.device.role_name = self._settings.role_name
+        if self._settings.instance_name:
+            context.device.instance_name = self._settings.instance_name
+        
 
         return None
 
