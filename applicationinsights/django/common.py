@@ -8,7 +8,9 @@ ApplicationInsightsSettings = collections.namedtuple("ApplicationInsightsSetting
     "channel_settings",
     "use_view_name",
     "record_view_arguments",
-    "log_exceptions"])
+    "log_exceptions",
+    "role_name",
+    "instance_name"])
 
 ApplicationInsightsChannelSettings = collections.namedtuple("ApplicationInsightsChannelSettings", [
     "send_interval",
@@ -31,6 +33,8 @@ def load_settings():
         use_view_name=config.get("use_view_name", False),
         record_view_arguments=config.get("record_view_arguments", False),
         log_exceptions=config.get("log_exceptions", True),
+        role_name=config.get("role_name", "default"),
+        instance_name=config.get("instance_name", "default"),
         channel_settings=ApplicationInsightsChannelSettings(
             endpoint=config.get("endpoint"),
             send_interval=config.get("send_interval"),
